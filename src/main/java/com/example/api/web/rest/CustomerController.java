@@ -17,12 +17,11 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
-	private CustomerService service;
+    private final CustomerService service;
 
-	@Autowired
-	public CustomerController(CustomerService service) {
-		this.service = service;
-	}
+    public CustomerController(CustomerService service) {
+        this.service = service;
+    }
 
 	@GetMapping
 	public List<Customer> findAll(

@@ -13,14 +13,19 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    private CustomerRepository repository;
+    private final CustomerRepository repository;
 
-    @Autowired
     public CustomerService(CustomerRepository repository) {
         this.repository = repository;
     }
 
-    public List<Customer> findAll(String name, String email, String gender, Integer page, Integer limit) {
+    public List<Customer> findAll(
+            final String name,
+            final String email,
+            final String gender,
+            final Integer page,
+            final Integer limit
+    ) {
         Pageable pageable = PageRequest.of(page != null ? page : 0, limit != null ? limit : 5);
 
         String filterName = toUpperCaseIfNotNull(name);
@@ -30,15 +35,15 @@ public class CustomerService {
         return repository.findAllByFilters(filterName, filterEmail, filterGender, pageable);
     }
 
-    public Optional<Customer> findById(Long id) {
+    public Optional<Customer> findById(final Long id) {
         return repository.findById(id);
     }
 
-    private String toUpperCaseIfNotNull(String value) {
+    private String toUpperCaseIfNotNull(final String value) {
         return value != null ? value.toUpperCase() : null;
     }
 
-    private String toLowerCaseIfNotNull(String value) {
+    private String toLowerCaseIfNotNull(final String value) {
         return value != null ? value.toLowerCase() : null;
     }
 }
