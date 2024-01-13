@@ -22,11 +22,19 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiResponse> handleNotFoundException(NotFoundException e) {
+        logger.error("Not Found Exception: {}", e.getMessage());
+
+        ApiResponse response = new ApiResponse(e.getMessage(), HttpStatus.NOT_FOUND.value());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleGenericException(Exception e) {
         logger.error("Unexpected Exception: {}", e.getMessage());
 
-        ApiResponse response = new ApiResponse("An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        ApiResponse response = new ApiResponse("An unexpected error occurred, check your system administrator", HttpStatus.INTERNAL_SERVER_ERROR.value());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
