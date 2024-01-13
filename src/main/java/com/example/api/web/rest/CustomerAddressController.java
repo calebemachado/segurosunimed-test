@@ -1,5 +1,6 @@
 package com.example.api.web.rest;
 
+import com.example.api.domain.Customer;
 import com.example.api.service.AddressService;
 import com.example.api.web.rest.model.AddressRequest;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,12 @@ public class CustomerAddressController {
     }
 
     @PostMapping("/customer/{customerId}")
-    public ResponseEntity<Void> addAddressToCustomer(
+    public ResponseEntity<Customer> addAddressToCustomer(
             @PathVariable Long customerId,
             @RequestBody AddressRequest addressRequest
     ) {
-        addressService.addAddressToCustomer(customerId, addressRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        Customer customer = addressService.addAddressToCustomer(customerId, addressRequest);
+        return new ResponseEntity<>(customer, HttpStatus.CREATED);
     }
 
     @DeleteMapping("{addressId}/customer/{customerId}")
