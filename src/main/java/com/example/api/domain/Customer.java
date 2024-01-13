@@ -1,6 +1,11 @@
 package com.example.api.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -27,11 +32,17 @@ public class Customer {
     public Customer() {
     }
 
+    public Customer(String name, String email, String gender) {
+        this.name = name.toUpperCase();
+        this.email = email.toLowerCase();
+        this.gender = gender.toUpperCase();
+    }
+
     public Customer(Long id, String name, String email, String gender) {
         this.id = id;
-        this.name = name;
-        this.email = email;
-        this.gender = gender;
+        this.name = name.toUpperCase();
+        this.email = email.toLowerCase();
+        this.gender = gender.toUpperCase();
     }
 
     public Long getId() {
