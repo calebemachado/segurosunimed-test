@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,7 +39,7 @@ public class CustomerControllerIT {
         List<Customer> customers = Arrays
                 .asList(new Customer(1L, "John", "john@gmail.com", "male"),
                         new Customer(2L, "Jane", "jane@gmail.com", "female"));
-        when(service.findAll()).thenReturn(customers);
+        when(service.findAll(any(), any(), any(), any(), any())).thenReturn(customers);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/customers")
                         .contentType(MediaType.APPLICATION_JSON))

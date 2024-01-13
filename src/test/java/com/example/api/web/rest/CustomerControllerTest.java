@@ -16,6 +16,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,12 +35,12 @@ class CustomerControllerTest {
         List<Customer> customers = Arrays
                 .asList(new Customer(1L, "John", "john@gmail.com", "male"),
                         new Customer(2L, "Jane", "jane@gmail.com", "female"));
-        when(service.findAll()).thenReturn(customers);
+        when(service.findAll(anyString(), anyString(), anyString(), anyInt(), anyInt())).thenReturn(customers);
 
-        List<Customer> result = controller.findAll();
+        List<Customer> result = controller.findAll("", "", "", 0, 5);
 
         assertEquals(customers, result);
-        verify(service, times(1)).findAll();
+        verify(service, times(1)).findAll("", "", "", 0, 5);
     }
 
     @Test
