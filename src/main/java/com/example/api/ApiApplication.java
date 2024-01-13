@@ -5,7 +5,11 @@ import com.example.api.repository.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
+
+import java.time.Duration;
 
 @SpringBootApplication
 public class ApiApplication {
@@ -30,5 +34,14 @@ public class ApiApplication {
             customerRepository.save(new Customer("GAMORA", "gamora@vingadores.com", "F"));
             customerRepository.save(new Customer("Hulk", "hulk@vingadores.com", "m"));
         };
+    }
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+
+        return builder
+                .setConnectTimeout(Duration.ofMillis(3000))
+                .setReadTimeout(Duration.ofMillis(3000))
+                .build();
     }
 }
