@@ -33,10 +33,12 @@ public class CustomerController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String state,
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "5") Integer limit
     ) {
-        return service.findAll(name, email, gender, page, limit);
+        return service.findAll(name, email, gender, city, state, page, limit);
     }
 
     @GetMapping("/{id}")

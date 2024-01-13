@@ -27,6 +27,8 @@ public class CustomerService {
             final String name,
             final String email,
             final String gender,
+            final String city,
+            final String state,
             final Integer page,
             final Integer limit
     ) {
@@ -36,7 +38,7 @@ public class CustomerService {
         String filterEmail = toLowerCaseIfNotNull(email);
         String filterGender = toUpperCaseIfNotNull(gender);
 
-        return repository.findAllByFilters(filterName, filterEmail, filterGender, pageable);
+        return repository.findAllByFilters(filterName, filterEmail, filterGender, city, state, pageable);
     }
 
     public Optional<Customer> findById(final Long id) {
