@@ -15,6 +15,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -88,5 +91,24 @@ class CustomerServiceTest {
         when(customerRepository.findById(any())).thenReturn(Optional.of(existingCustomer));
 
         assertThrows(ValidationException.class, () -> customerService.updateCustomer(1L, customerRequest));
+    }
+
+    @Test
+    public void testRemoveCustomer_Success() {
+        Customer existingCustomer = new Customer("John Doe", "john@example.com", "M");
+        when(customerRepository.findById(any())).thenReturn(Optional.of(existingCustomer));
+
+        customerService.removeCustomer(1L);
+
+        verify(customerRepository, times(1)).delete(existingCustomer);
+    }
+
+    @Test
+    public void testRemoveCustomer_NotFound() {
+        when(customerRepository.findById(any())).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> customerService.removeCustomer(1L));
+
+        verify(customerRepository, never()).delete(any());
     }
 }

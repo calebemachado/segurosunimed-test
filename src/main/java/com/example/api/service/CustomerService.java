@@ -70,6 +70,13 @@ public class CustomerService {
         return repository.save(existingCustomer);
     }
 
+    public void removeCustomer(Long id) {
+        Customer existingCustomer = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Customer", id.toString()));
+
+        repository.delete(existingCustomer);
+    }
+
     private String toUpperCaseIfNotNull(final String value) {
         return value != null ? value.toUpperCase() : null;
     }
@@ -77,4 +84,6 @@ public class CustomerService {
     private String toLowerCaseIfNotNull(final String value) {
         return value != null ? value.toLowerCase() : null;
     }
+
+
 }
