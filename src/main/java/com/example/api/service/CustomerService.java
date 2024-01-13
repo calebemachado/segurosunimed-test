@@ -1,8 +1,8 @@
 package com.example.api.service;
 
 import com.example.api.domain.Customer;
+import com.example.api.exception.NotFoundException;
 import com.example.api.repository.CustomerRepository;
-import com.example.api.service.validation.CustomerValidator;
 import com.example.api.web.rest.model.CustomerRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.api.service.validation.CustomerValidator.validateCustomerRequest;
+import static com.example.api.service.validation.CustomerValidator.validateCustomerUpdateRequest;
 
 @Service
 public class CustomerService {
@@ -41,7 +44,7 @@ public class CustomerService {
     }
 
     public Customer createCustomer(final CustomerRequest customerRequest) {
-        CustomerValidator.validateCustomerRequest(customerRequest);
+        validateCustomerRequest(customerRequest);
 
         Customer newCustomer = new Customer(
                 customerRequest.getName(),
@@ -49,6 +52,22 @@ public class CustomerService {
                 customerRequest.getGender());
 
         return repository.save(newCustomer);
+    }
+
+    public Customer updateCustomer(
+            Long id,
+            CustomerRequest customerRequest
+    ) {
+        Customer existingCustomer = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Customer", id.toString()));
+
+        validateCustomerUpdateRequest(customerRequest);
+
+        existingCustomer.setName(customerRequest.getName());
+        existingCustomer.setEmail(customerRequest.getEmail());
+        existingCustomer.setGender(customerRequest.getGender());
+
+        return repository.save(existingCustomer);
     }
 
     private String toUpperCaseIfNotNull(final String value) {

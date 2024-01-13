@@ -58,7 +58,7 @@ public class Customer {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name != null ? name.toUpperCase() : null;
     }
 
     public String getEmail() {
@@ -66,7 +66,7 @@ public class Customer {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email != null ? email.toLowerCase() : null;
     }
 
     public String getGender() {
@@ -74,7 +74,7 @@ public class Customer {
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        this.gender = gender != null ? gender.toUpperCase() : null;
     }
 
 }
