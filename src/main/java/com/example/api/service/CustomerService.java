@@ -2,7 +2,8 @@ package com.example.api.service;
 
 import com.example.api.domain.Customer;
 import com.example.api.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.api.service.validation.CustomerValidator;
+import com.example.api.web.rest.model.CustomerRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,17 @@ public class CustomerService {
 
     public Optional<Customer> findById(final Long id) {
         return repository.findById(id);
+    }
+
+    public Customer createCustomer(final CustomerRequest customerRequest) {
+        CustomerValidator.validateCustomerRequest(customerRequest);
+
+        Customer newCustomer = new Customer(
+                customerRequest.getName(),
+                customerRequest.getEmail(),
+                customerRequest.getGender());
+
+        return repository.save(newCustomer);
     }
 
     private String toUpperCaseIfNotNull(final String value) {
