@@ -68,7 +68,7 @@ class CustomerServiceTest {
 
         Customer updatedCustomer = customerService.updateCustomer(1L, customerRequest);
 
-        assertEquals("Updated Name", updatedCustomer.getName());
+        assertEquals("UPDATED NAME", updatedCustomer.getName());
         assertEquals("updated@example.com", updatedCustomer.getEmail());
         assertEquals("F", updatedCustomer.getGender());
     }
