@@ -1,13 +1,17 @@
 package com.example.api.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "CUSTOMER")
@@ -28,6 +32,9 @@ public class Customer {
     @Column(nullable = false)
     @NotEmpty
     private String gender;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Address> addresses = new ArrayList<>();
 
     public Customer() {
     }
@@ -77,4 +84,17 @@ public class Customer {
         this.gender = gender != null ? gender.toUpperCase() : null;
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void addAddress(Address address) {
+        addresses.add(address);
+        address.setCustomer(this);
+    }
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setCustomer(null);
+    }
 }
