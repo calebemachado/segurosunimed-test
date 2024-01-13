@@ -8,52 +8,62 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "CUSTOMER")
 public class Customer {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@Column(nullable = false)
-	private String name;
+    @Column(nullable = false)
+    private String name;
 
-	@Column(nullable = false)
-	@NotEmpty
-	@Email
-	private String email;
+    @Column(nullable = false)
+    @NotEmpty
+    @Email
+    private String email;
 
-	@Column(nullable = false)
-	@NotEmpty
-	private String gender;
+    @Column(nullable = false)
+    @NotEmpty
+    private String gender;
 
-	public Long getId() {
-		return id;
-	}
+    public Customer() {
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Customer(Long id, String name, String email, String gender) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
 }
